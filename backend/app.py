@@ -1,14 +1,18 @@
-import os
 from flask import Flask, request, jsonify
-from openai import OpenAI
+import os
 from dotenv import load_dotenv
+from openai import OpenAI
+from flask_cors import CORS
 
 # Załaduj zmienne środowiskowe z pliku .env
 load_dotenv()
 
-app = Flask(__name__)
 
-# Pobierz klucz API z zmiennej środowiskowej
+app = Flask(__name__)
+CORS(app)  # Umożliwienie zapytań między frontendem (React) a backendem (Flask)
+
+
+# Pobierz klucz API OpenAI z pliku .env
 openai_api_key = os.getenv('OPENAI_API_KEY')
 if not openai_api_key:
     raise ValueError("OPENAI_API_KEY is not set")
@@ -26,6 +30,7 @@ def openai_api():
         max_tokens=150
     )
 
+    # Pobranie odpowiedzi z OpenAI
     response_dict = chat_completion.to_dict()
     message_content = response_dict['choices'][0]['message']['content']
 

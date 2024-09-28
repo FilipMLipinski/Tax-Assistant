@@ -1,29 +1,34 @@
-import React, { useState } from "react";
-import Conversation from "./Conversation";
-import UserInput from "./UserInput";
+import React, { useState } from 'react';
+import Conversation from './Conversation';
+import UserInput from './UserInput';
 
 export default function ChatWindow() {
     const [messages, setMessages] = useState([]);
 
     const addMessage = (message) => {
-        // Add user's message
         setMessages((prevMessages) => [
             ...prevMessages,
             { sender: "user", text: message },
         ]);
 
-        // Simulate bot's response
-        setTimeout(() => {
-            const botResponse = getResponse();
+        // Wyślij zapytanie do backendu Flask
+        fetch('http://localhost:5000/api/openai', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ input: message }),
+        })
+        .then(response => response.json())
+        .then(data => {
             setMessages((prevMessages) => [
                 ...prevMessages,
-                { sender: "bot", text: botResponse },
+                { sender: "bot", text: data.response },
             ]);
-        }, 1000); // Simulate delay for bot's response
-    };
-
-    const getResponse = () => {
-        return "bot's response";
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
     };
 
     return (
