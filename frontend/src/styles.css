@@ -13,6 +13,7 @@
 #main{
     display:flex;
     height:100%;
+    gap:10px;
 }
 
 #menuBar{
@@ -75,6 +76,8 @@ body, html{
     display: flex;
     align-items: center;
     margin-top: 10px;
+    margin-bottom: 20px;
+    flex:1;
 }
 
 #userInput textarea {
@@ -85,6 +88,7 @@ body, html{
 #conversation {
     height: 400px;
     padding: 10px;
+    flex:9;
     border: 1px solid #ccc;
     border-radius: 8px;
     overflow-y: scroll; /* Enable scrolling when messages overflow */
