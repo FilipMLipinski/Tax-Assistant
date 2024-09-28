@@ -2,6 +2,17 @@ import React, { useEffect, useState } from "react";
 import "./DocumentWindow.css"; // Link to the CSS file
 
 export default function DocumentWindow() {
+    return (
+        <div id="documentWindow">
+            <DocumentRenderer />
+            <div id="buttonContainer"> {/* New div to contain the button */}
+                <DownloadXMLButton />
+            </div>
+        </div>
+    );
+}
+
+function DocumentRenderer() {
     const [htmlContent, setHtmlContent] = useState(null);
     const [error, setError] = useState(null);
 
@@ -49,7 +60,7 @@ export default function DocumentWindow() {
     };
 
     return (
-        <div id="documentWindow">
+        <div id="documentRenderer">
             {error && <p style={{ color: "red" }}>{error}</p>}
             {htmlContent ? (
                 <div className="scrollable-content" dangerouslySetInnerHTML={{ __html: htmlContent }} />
@@ -57,5 +68,30 @@ export default function DocumentWindow() {
                 <p>Loading XML data...</p>
             )}
         </div>
+    );
+}
+
+function DownloadXMLButton() {
+    const handleDownload = async () => {
+        try {
+            const response = await fetch("/jacht.xml"); // Adjust path if necessary
+            const blob = await response.blob(); // Get the XML as a blob
+            const url = window.URL.createObjectURL(blob); // Create a URL for the blob
+            const a = document.createElement('a'); // Create a temporary anchor element
+            a.href = url;
+            a.download = 'jacht.xml'; // Set the desired file name
+            document.body.appendChild(a); // Append the anchor to the body
+            a.click(); // Simulate a click on the anchor to trigger download
+            a.remove(); // Remove the anchor from the document
+            window.URL.revokeObjectURL(url); // Cleanup the URL object
+        } catch (error) {
+            console.error("Error downloading XML:", error);
+        }
+    };
+
+    return (
+        <button id="xmlButton" onClick={handleDownload}>
+            Pobierz XML
+        </button>
     );
 }
