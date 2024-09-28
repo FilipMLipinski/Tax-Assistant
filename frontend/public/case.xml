@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Deklaracja xmlns="http://crd.gov.pl/wzor/2023/12/13/13064/">
+  <Naglowek>
+    <KodFormularza kodSystemowy="PCC-3 (6)" kodPodatku="PCC" rodzajZobowiazania="Z" wersjaSchemy="1-0E">PCC-3</KodFormularza>
+    <WariantFormularza>6</WariantFormularza>
+    <CelZlozenia poz="P_6">1</CelZlozenia>
+    <Data poz="P_4">2024-09-06</Data>
+    <KodUrzedu>1472</KodUrzedu>
+  </Naglowek>
+  <Podmiot1 rola="Podatnik">
+    <OsobaFizyczna>
+      <PESEL>83011643222</PESEL>
+      <ImiePierwsze>KRZYSZTOF</ImiePierwsze>
+      <Nazwisko>JAN</Nazwisko>
+      <DataUrodzenia>1983-01-16</DataUrodzenia>
+    </OsobaFizyczna>
+    <AdresZamieszkaniaSiedziby rodzajAdresu="RAD">
+      <AdresPol>
+        <KodKraju>PL</KodKraju>
+        <Wojewodztwo>LUBELSKIE</Wojewodztwo>
+        <Powiat>BIALSKI</Powiat>
+        <Gmina>BIAŁA PODLASKA</Gmina>
+        <NrDomu>11</NrDomu>
+        <Miejscowosc>PODLASKI</Miejscowosc>
+        <KodPocztowy>00-900</KodPocztowy>
+      </AdresPol>
+    </AdresZamieszkaniaSiedziby>
+  </Podmiot1>
+  <PozycjeSzczegolowe>
+    <P_7>3</P_7>
+    <P_20>1</P_20>
+    <P_21>1</P_21>
+    <P_22>1</P_22>
+    <P_23>umowa spółki - zawarcie umowy spółki KRZAK</P_23>
+    <P_47>1</P_47>
+    <P_48>1</P_48>
+    <P_49>150000</P_49>
+    <P_51>150000.00</P_51>
+    <P_52>750</P_52>
+    <P_53>750</P_53>
+    <P_54>KUJAWSKO-POMORSKIE</P_54>
+    <P_55>BRODNICKI</P_55>
+    <P_56>BRODNICA-MIEJSKA</P_56>
+    <P_58>1</P_58>
+    <P_60>BRODNICA</P_60>
+    <P_61>11-100</P_61>
+    <P_62>1</P_62>
+  </PozycjeSzczegolowe>
+  <Pouczenia>1</Pouczenia>
+</Deklaracja>
