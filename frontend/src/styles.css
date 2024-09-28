@@ -1,9 +1,9 @@
 /* for debugging */
-*{
+/* *{
     border-color:red;
     border-style:dashed;
     border-width:2px;
-}
+} */
 
 :root{
     --myred:rgb(218, 11, 11);
