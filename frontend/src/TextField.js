@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from "react";
 
-export default function TextField({ value, onChange }) {
+export default function TextField({ value, onChange, onSend }) { // Add onSend as a prop
     const textareaRef = useRef(null);
 
     useEffect(() => {
@@ -9,6 +9,13 @@ export default function TextField({ value, onChange }) {
         textarea.style.height = `${textarea.scrollHeight}px`;
     }, [value]);
 
+    const handleKeyPress = (event) => {
+        if (event.key === "Enter" && !event.shiftKey) { // Check if Enter key is pressed without Shift
+            event.preventDefault(); // Prevent new line
+            onSend(); // Call the send function
+        }
+    };
+
     return (
         <textarea
             id="textField"
@@ -16,6 +23,7 @@ export default function TextField({ value, onChange }) {
             value={value}
             onChange={(e) => onChange(e.target.value)}  // Make sure to pass the new value
             placeholder="Type your message..."
+            onKeyDown={handleKeyPress} // Add keydown event listener
         />
     );
 }

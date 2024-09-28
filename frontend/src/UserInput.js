@@ -14,7 +14,7 @@ export default function UserInput({ onSend }) {
 
     return (
         <div id="userInput">
-            <TextField value={inputValue} onChange={setInputValue} />
+            <TextField value={inputValue} onChange={setInputValue} onSend={handleSend} /> {/* Pass onSend to TextField */}
             <SendButton onClick={handleSend} />
         </div>
     );
