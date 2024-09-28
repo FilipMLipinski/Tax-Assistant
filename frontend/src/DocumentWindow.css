@@ -1,12 +1,21 @@
 #documentWindow {
-    flex: 1;
+    /* Let the container grow or shrink based on available space */
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 0; /* Take up remaining space in the flex container */
+    
+    /* Prevent the document from spilling over */
+    max-height: 100%; /* Maximum height is constrained by parent container */
+    overflow-y: auto; /* Enable scrolling for overflowing content */
     padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
     background-color: #f9f9f9;
-    overflow-y: auto; /* Enable scrolling if content overflows */
+    border: 1px solid #ccc; /* Optional border */
+    margin-bottom:20px;
 }
 
+.scrollable-content {
+    white-space: pre-wrap; /* Keeps content wrapped nicely */
+}
 h2 {
     margin: 10px 0;
 }
@@ -16,4 +25,8 @@ pre {
     padding: 10px;
     border-radius: 4px;
     margin: 5px 0;
+}
+
+.scrollable-content {
+    white-space: pre-wrap; /* Keeps the content wrapped nicely */
 }

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./DocumentWindow";
+import "./DocumentWindow.css"; // Link to the CSS file
 
 export default function DocumentWindow() {
     const [htmlContent, setHtmlContent] = useState(null);
@@ -16,7 +16,7 @@ export default function DocumentWindow() {
                 const xslResponse = await fetch("/xsd/styl.xsl");
                 const xslText = await xslResponse.text();
 
-                console.log("everything is ok")
+                console.log("everything is ok");
                 // Transform XML using XSL
                 const transformedHtml = transformXml(xmlText, xslText);
                 setHtmlContent(transformedHtml);
@@ -30,23 +30,19 @@ export default function DocumentWindow() {
     }, []);
 
     const transformXml = (xmlText, xslText) => {
-        // Create a new XSLT processor
         const parser = new DOMParser();
         const xmlDoc = parser.parseFromString(xmlText, "application/xml");
         const xslDoc = parser.parseFromString(xslText, "application/xml");
 
-        // Check for parsing errors
         if (xmlDoc.getElementsByTagName("parsererror").length > 0 || 
             xslDoc.getElementsByTagName("parsererror").length > 0) {
             throw new Error("Error parsing XML or XSL.");
         }
 
-        // Perform the transformation
         const xsltProcessor = new XSLTProcessor();
         xsltProcessor.importStylesheet(xslDoc);
         const resultDocument = xsltProcessor.transformToFragment(xmlDoc, document);
 
-        // Return the transformed HTML
         const wrapper = document.createElement("div");
         wrapper.appendChild(resultDocument);
         return wrapper.innerHTML;
@@ -56,7 +52,7 @@ export default function DocumentWindow() {
         <div id="documentWindow">
             {error && <p style={{ color: "red" }}>{error}</p>}
             {htmlContent ? (
-                <div dangerouslySetInnerHTML={{ __html: htmlContent }} />
+                <div className="scrollable-content" dangerouslySetInnerHTML={{ __html: htmlContent }} />
             ) : (
                 <p>Loading XML data...</p>
             )}

@@ -9,11 +9,11 @@
     --myred:rgb(218, 11, 11);
 }
 
-
 #main{
     display:flex;
-    height:100%;
+    flex-grow:1;
     gap:10px;
+    overflow: hidden;
 }
 
 #menuBar{
@@ -26,7 +26,7 @@
     font-family:Verdana, Geneva, Tahoma, sans-serif;
 }
 
-body, html{
+body, html, #root{
     height:100%;
     display:flex;
     flex-direction: column;
@@ -62,8 +62,7 @@ body, html{
 #app{
     display: flex;
     flex-direction: column;
-    height: 100%;
-    width:100%;
+    height: 100vh;
 }
 
 #chatWindow{
