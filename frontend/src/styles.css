@@ -1,0 +1,149 @@
+/* for debugging */
+*{
+    border-color:red;
+    border-style:dashed;
+    border-width:2px;
+}
+
+:root{
+    --myred:rgb(218, 11, 11);
+}
+
+
+#main{
+    display:flex;
+    height:100%;
+}
+
+#menuBar{
+    color:white;
+    font-size:large;
+    background-color: var(--myred);
+    display: flex;
+    height:3cm;
+    align-items: center;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+}
+
+body, html{
+    height:100%;
+    display:flex;
+    flex-direction: column;
+    padding:0;
+    margin:0;
+}
+
+#root{
+    display:flex;
+    flex:1;
+    height:100%;
+}
+
+#logo{
+    flex:2;
+    display: flex;
+    color:white;
+    font-size:xx-large;
+    align-items: center;
+    width: 5cm;
+}
+
+#language{
+    flex:1;
+    width:3cm;
+    text-align: center;
+}
+
+#externalLink{
+    flex:1;
+}
+
+#app{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width:100%;
+}
+
+#chatWindow{
+    display:flex;
+    flex:1;
+    flex-direction: column;
+}
+
+#userInput {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+#userInput textarea {
+    flex: 1;
+    margin-right: 10px;
+}
+
+#conversation {
+    height: 400px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    overflow-y: scroll; /* Enable scrolling when messages overflow */
+    background-color: #f9f9f9;
+}
+
+.message {
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    max-width: 70%;
+}
+
+.message.user {
+    background-color: #e5e5e5;
+    color:black;
+    align-self: flex-end;
+    margin-left: auto;
+}
+
+.message.bot {
+    background-color: var(--myred);
+    color: white;
+}
+
+#documentWindow{
+    flex:1;
+}
+
+#sendButton {
+    padding: 10px 15px;
+    font-size: 16px;
+    color: white;
+    background-color: var(--myred);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    flex-shrink: 0; /* Ensures button stays the same size */
+}
+
+#sendButton:hover {
+    background-color: rgb(181, 8, 8);
+}
+
+#textField {
+    width: 100%;
+    min-height: 50px;
+    max-height: 300px; /* Max height before scroll */
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    resize: none; /* Disable manual resizing */
+    overflow-y: auto; /* Scroll when max height is reached */
+    box-sizing: border-box;
+}
+
+#textField:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}

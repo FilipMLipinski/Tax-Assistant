@@ -1,0 +1,30 @@
+{
+  "name": "Tax-Assistant",
+  "version": "0.0.0",
+  "lockfileVersion": 3,
+  "requires": true,
+  "main": "/src/index.js",
+  "packages": {},
+  "browserslist": {
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ],
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ]
+  },
+  "scripts": {
+    "build": "react-scripts build",
+    "eject": "react-scripts eject",
+    "start": "react-scripts start",
+    "test": "react-scripts test --env=jsdom"
+  },
+  "dependencies": {
+    "react-dom": "^18.3.1",
+    "react-scripts": "^5.0.1"
+  }
+}
