@@ -1,0 +1,28 @@
+/* for debugging */
+*{
+    border-color:red;
+    border-style:dashed;
+    border-width:2px;
+}
+
+#main{
+    display:flex;
+}
+
+#menuBar{
+    display: flex;
+}
+
+#app{
+    display: flex;
+    flex-direction: column;
+}
+
+#chatWindow{
+    display:flex;
+    flex-direction: column;
+}
+
+#userInput{
+    display: flex;
+}
