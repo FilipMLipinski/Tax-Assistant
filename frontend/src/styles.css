@@ -114,7 +114,7 @@ body, html, #root{
 }
 
 #documentWindow{
-    flex:1;
+    flex:2;
 }
 
 #sendButton {

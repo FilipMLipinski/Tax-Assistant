@@ -9,7 +9,7 @@ export default function DocumentWindow() {
         const loadAndTransformXml = async () => {
             try {
                 // Load the XML file
-                const xmlResponse = await fetch("/case.xml");
+                const xmlResponse = await fetch("/jacht.xml");
                 const xmlText = await xmlResponse.text();
 
                 // Load the XSL file
