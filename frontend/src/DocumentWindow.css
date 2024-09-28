@@ -3,14 +3,28 @@
     flex-grow: 1;
     flex-shrink: 1;
     flex-basis: 0; /* Take up remaining space in the flex container */
+    display:flex;
+    flex-direction: column;
     
     /* Prevent the document from spilling over */
     max-height: 100%; /* Maximum height is constrained by parent container */
-    overflow-y: auto; /* Enable scrolling for overflowing content */
     padding: 10px;
-    background-color: #f9f9f9;
+    margin-bottom:10px;
+}
+
+#documentRenderer {
+    flex: 1; /* Take up remaining space */
+    overflow-y: auto; /* Make it scrollable */
+    padding: 10px; /* Optional padding */
+    background: #f9f9f9; /* Optional background color */
     border: 1px solid #ccc; /* Optional border */
-    margin-bottom:20px;
+}
+
+#buttonContainer{
+    margin-top:20px;
+    margin-bottom:10px;
+    display: flex;
+    justify-content: right;
 }
 
 .scrollable-content {
