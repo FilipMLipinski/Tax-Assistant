@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Conversation from './Conversation';
 import UserInput from './UserInput';
 
 export default function ChatWindow() {
     const [messages, setMessages] = useState([]);
+    const hasGreeted = useRef(false);  // Ref to track if greeting has been sent
 
     const addMessage = (message) => {
         setMessages((prevMessages) => [
@@ -30,6 +31,18 @@ export default function ChatWindow() {
             console.error('Error:', error);
         });
     };
+
+    // Add initial greeting message when the component mounts
+    useEffect(() => {
+        if (!hasGreeted.current) {
+            const greetingMessage = "Witaj! Czy chciałbyś asysty w uzupełnieniu formularza PCC?";
+            setMessages((prevMessages) => [
+                ...prevMessages,
+                { sender: "bot", text: greetingMessage },
+            ]);
+            hasGreeted.current = true;  // Mark greeting as sent
+        }
+    }, []); // Empty array ensures the effect runs only once
 
     return (
         <div id="chatWindow">
