@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat with AI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="chat-container">
+        <h1>Chat with AI</h1>
+        <div class="chat-box" id="chat-box">
+            <!-- Tutaj pojawią się wiadomości -->
+        </div>
+        <input type="text" id="user-input" placeholder="Write a message..." />
+        <button id="send-button">Send</button>
+    </div>
+
+    <script>
+        document.getElementById('send-button').addEventListener('click', function() {
+            const userInput = document.getElementById('user-input').value;
+            const chatBox = document.getElementById('chat-box');
+
+            // Wyświetlenie wiadomości użytkownika
+            const userMessage = document.createElement('div');
+            userMessage.classList.add('message', 'user-message');
+            userMessage.innerText = userInput;
+            chatBox.appendChild(userMessage);
+
+            // Wysłanie wiadomości do backendu (OpenAI)
+            fetch('/api/openai', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ input: userInput })
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Wyświetlenie odpowiedzi z OpenAI
+                const aiMessage = document.createElement('div');
+                aiMessage.classList.add('message', 'ai-message');
+                aiMessage.innerText = data.response;
+                chatBox.appendChild(aiMessage);
+
+                // Scrollowanie do dołu chat-box
+                chatBox.scrollTop = chatBox.scrollHeight;
+            });
+
+            // Wyczyść pole input
+            document.getElementById('user-input').value = '';
+        });
+    </script>
+</body>
+</html>
