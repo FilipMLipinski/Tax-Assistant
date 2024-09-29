@@ -16,7 +16,7 @@ app = Flask(__name__)
 CORS(app)  # Umożliwienie zapytań między frontendem (React) a backendem (Flask)
 
 # Konfiguracja WebSocket
-app.config['SECRET_KEY'] = 'your_secret_key'
+app.config['SECRET_KEY'] = os.getenv('OPENAI_API_KEY')
 socketio = SocketIO(app, cors_allowed_origins="*")  # SocketIO dla komunikacji w czasie rzeczywistym
 
 # Konfiguracja SQLite
@@ -80,7 +80,7 @@ if not openai_api_key:
     raise ValueError("OPENAI_API_KEY is not set")
 
 client = OpenAI(api_key=openai_api_key)
-    
+
 def getMissingFields():
     missing_fields = FormData.query.filter(FormData.value == '').all()
     return [entry.field_name for entry in missing_fields]
@@ -232,10 +232,6 @@ def get_value():
     else:
         return jsonify({"error": f"Nie znaleziono wartości dla {field_name}"}), 404
 
-# Strona do wyświetlania wpisów na żywo
-@app.route('/live_entries')
-def live_entries():
-    return render_template('live_entries.html')
 
 # Zainicjuj bazę danych przed uruchomieniem aplikacji
 if __name__ == '__main__':
