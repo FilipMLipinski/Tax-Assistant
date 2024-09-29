@@ -1,6 +1,8 @@
 import xml.dom.minidom
 
 def generateXML(d):
+    # d to dictionary otrzymany z bazy danych
+    # z tamtad wezmiemy tez te P_value?
     def wrap(name):
         if(name!='Data'):
             return "<" + name + ">" + d[name] + "</" + name + ">"

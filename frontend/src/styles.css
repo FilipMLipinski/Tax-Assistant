@@ -14,6 +14,11 @@
     flex-grow:1;
     gap:10px;
     overflow: hidden;
+    padding:0;
+}
+
+* {
+    box-sizing: border-box;
 }
 
 #menuBar{
@@ -24,20 +29,24 @@
     height:3cm;
     align-items: center;
     font-family:Verdana, Geneva, Tahoma, sans-serif;
+    width:100%;
+    padding:0;
 }
 
 body, html, #root{
     height:100%;
+    width:100%;
     display:flex;
     flex-direction: column;
+    overflow-x: hidden;
+    overflow-y: hidden;
     padding:0;
     margin:0;
 }
 
 #root{
-    display:flex;
-    flex:1;
-    height:100%;
+    margin:0;
+    padding:0;
 }
 
 #logo{
@@ -47,7 +56,9 @@ body, html, #root{
     font-size:xx-large;
     align-items: center;
     width: 5cm;
+    padding:0;
 }
+
 
 #language{
     flex:1;
@@ -63,12 +74,16 @@ body, html, #root{
     display: flex;
     flex-direction: column;
     height: 100vh;
+    margin:0;
+    padding:0;
 }
 
 #chatWindow{
     display:flex;
     flex:1;
     flex-direction: column;
+    width:100%;
+    padding:0;
 }
 
 #userInput {
@@ -109,12 +124,26 @@ body, html, #root{
 }
 
 .message.bot {
-    background-color: var(--myred);
-    color: white;
+    background-color: #f9f9f9;
+    color: black;
+}
+
+.scrollableContent{
+    width:100%;
+}
+
+#documentRenderer{
+    display:flex;
+    width:100%;
+    padding:10px;
+    margin:0;
 }
 
 #documentWindow{
+    display:flex;
+    width:100%;
     flex:2;
+    padding:0;
 }
 
 #sendButton,#xmlButton {
@@ -126,6 +155,26 @@ body, html, #root{
     border-radius: 5px;
     cursor: pointer;
     flex-shrink: 0; /* Ensures button stays the same size */
+}
+
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+:global(body){
+    margin:0;
+    padding:0;
+}
+
+h1, h2, h3, h4, h5, h6, p, ul, ol {
+    margin: 0;
+    padding: 0;
+}
+
+* {
+    padding: 0;
 }
 
 #sendButton:hover {

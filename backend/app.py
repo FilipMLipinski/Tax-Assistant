@@ -66,7 +66,6 @@ def seed_database():
             db.session.add(new_entry)
     db.session.commit()  # Commit the changes to the database
 
-# Model bazy danych do przechowywania danych z formularza
 class FormData(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     field_name = db.Column(db.String(100), nullable=False)
@@ -76,7 +75,6 @@ class FormData(db.Model):
         self.field_name = field_name
         self.value = value
 
-# Pobierz klucz API OpenAI z pliku .env
 openai_api_key = os.getenv('OPENAI_API_KEY')
 if not openai_api_key:
     raise ValueError("OPENAI_API_KEY is not set")
@@ -105,18 +103,15 @@ def update_using_assistant(user_input):
         {"role": "user", "content": user_input}
     ]
 
-    # Wywołanie OpenAI API z kontekstem rozmowy
     chat_completion = client.chat.completions.create(
         model="gpt-4-turbo",
         messages=conversation_history,
         max_tokens=150
     )
 
-    # Pobranie odpowiedzi z OpenAI
     response_dict = chat_completion.to_dict()
     message_content = response_dict['choices'][0]['message']['content']
 
-    # Try to parse the JSON response
     try:
         parsed_values = json.loads(message_content)
     except json.JSONDecodeError:
@@ -137,19 +132,13 @@ def update_using_assistant(user_input):
     print(getMissingFields())
 
 def doneMessage():
-    generateXML(printDB())
     entries = FormData.query.all()
 
     socketio.emit('xml_ready')
 
-    thank_you_message = "Dziekuje, juz generuje XML.\n\n"
+    thank_you_message = "Dziekuję, to wszystkie dane które potrzebowałem.\n\nWpisałem je do formularza, proszę sprawdzić czy są poprawne.\nJeśli tak, przejdźmy do dokładniejszego omówienia sprawy."
 
-    data_string = "\n".join([f"{entry.field_name}: {entry.value}" for entry in entries])
-
-    # Combine the thank you message with the data
-    final_message = thank_you_message + "Oto informacje ktore podales:\n" + data_string
-
-    return final_message
+    return thank_you_message
 
 
 @app.route('/api/get_xml', methods=['GET'])
