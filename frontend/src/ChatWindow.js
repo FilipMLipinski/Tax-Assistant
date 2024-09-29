@@ -35,10 +35,16 @@ export default function ChatWindow() {
     // Add initial greeting message when the component mounts
     useEffect(() => {
         if (!hasGreeted.current) {
-            const greetingMessage = "Witaj! Czy chciałbyś asysty w uzupełnieniu formularza PCC?";
+            const greetingMessage = "Witam! w czym mogę pomóc?"
+            const userMessage = "Mam taką sprawę... <użytkownik podaje kontekst>";
+            const botMessage = "W takim razie potrzebuje Pan/Pani wypełnić formularz PCC-3. Już go pokazuję, po prawej stronie. Z chęcią go wypełnię, ale potrzebuję więcej informacji. Zacznijmy od Pana/Pani danych osobowych.";
+            
+            // Set both messages in the state
             setMessages((prevMessages) => [
                 ...prevMessages,
-                { sender: "bot", text: greetingMessage },
+                {sender: "bot", text: greetingMessage},
+                { sender: "user", text: userMessage },
+                { sender: "bot", text: botMessage },
             ]);
             hasGreeted.current = true;  // Mark greeting as sent
         }

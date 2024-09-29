@@ -16,7 +16,7 @@ export default function DocumentWindow() {
 function DocumentRenderer() {
     const [htmlContent, setHtmlContent] = useState(null);
     const [error, setError] = useState(null);
-    
+
     // Initialize socket connection
     const socket = io("http://localhost:5000"); // Adjust if necessary
 
@@ -69,7 +69,7 @@ function DocumentRenderer() {
         const xmlDoc = parser.parseFromString(xmlText, "application/xml");
         const xslDoc = parser.parseFromString(xslText, "application/xml");
 
-        if (xmlDoc.getElementsByTagName("parsererror").length > 0 || 
+        if (xmlDoc.getElementsByTagName("parsererror").length > 0 ||
             xslDoc.getElementsByTagName("parsererror").length > 0) {
             throw new Error("Error parsing XML or XSL.");
         }
@@ -83,11 +83,23 @@ function DocumentRenderer() {
         return wrapper.innerHTML;
     };
 
+    // Reset the body styles after setting the content
+    useEffect(() => {
+        if (htmlContent) {
+            console.log("Transformed HTML content: ", htmlContent);
+            
+            // Reset body styles after the content is loaded
+            document.body.style.margin = "0";
+            document.body.style.padding = "0";
+            document.body.style.overflowX = "hidden"; // Prevent horizontal scrolling
+        }
+    }, [htmlContent]);
+
     return (
         <div id="documentRenderer">
             {error && <p style={{ color: "red" }}>{error}</p>}
             {htmlContent ? (
-                <div className="scrollable-content" dangerouslySetInnerHTML={{ __html: htmlContent }} />
+                <div className="scrollableContent" dangerouslySetInnerHTML={{ __html: htmlContent }} />
             ) : (
                 <p>Loading XML data...</p>
             )}
