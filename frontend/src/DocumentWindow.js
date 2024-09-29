@@ -20,6 +20,27 @@ function DocumentRenderer() {
     // Initialize socket connection
     const socket = io("http://localhost:5000"); // Adjust if necessary
 
+    // Call API to seed the database on component mount
+    useEffect(() => {
+        const seedDatabase = async () => {
+            try {
+                const response = await fetch("http://localhost:5000/api/seed_database", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                });
+                const data = await response.json();
+                console.log(data.message); // Log success message
+            } catch (error) {
+                console.error("Error seeding database:", error);
+            }
+        };
+
+        // Call seedDatabase on mount
+        seedDatabase();
+    }, []); // Empty dependency array to run once on mount
+
     useEffect(() => {
         const loadAndTransformXml = async () => {
             try {

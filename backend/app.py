@@ -73,6 +73,12 @@ def seed_database():
             db.session.add(FormData(field_name=field_name, value=''))
     db.session.commit()
 
+@app.route('/api/seed_database', methods=['POST'])
+def seed_database_api():
+    # Call the seed_database function
+    seed_database()
+    return jsonify({"message": "Database seeded successfully."}), 200
+
 class FormData(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     field_name = db.Column(db.String(100), nullable=False)
@@ -144,8 +150,6 @@ def doneMessage():
     socketio.emit('xml_ready')
 
     thank_you_message = "Dziekuję, to wszystkie dane które potrzebowałem.\n\nWpisałem je do formularza, proszę sprawdzić czy są poprawne.\nJeśli tak, przejdźmy do dokładniejszego omówienia sprawy."
-
-    seed_database()
 
     return thank_you_message
 
