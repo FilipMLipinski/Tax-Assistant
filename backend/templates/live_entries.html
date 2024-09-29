@@ -42,3 +42,48 @@
     </script>
 </body>
 </html>
+
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Database Entries</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        #entries {
+            margin-top: 20px;
+            max-width: 600px;
+        }
+        .entry {
+            padding: 10px;
+            border: 1px solid #ddd;
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Live Database Entries</h1>
+    <div id="entries"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <script>
+        var socket = io.connect('http://' + document.domain + ':' + location.port);
+
+        // Funkcja dodająca wpis na stronę
+        function addEntry(entry) {
+            var entryDiv = document.createElement('div');
+            entryDiv.classList.add('entry');
+            entryDiv.textContent = entry.field_name + ': ' + entry.value;
+            document.getElementById('entries').appendChild(entryDiv);
+        }
+
+        // Odbieranie nowych wpisów przez WebSocket
+        socket.on('new_entry', function(data) {
+            addEntry(data);
+        });
+    </script>
+</body>
+</html>
