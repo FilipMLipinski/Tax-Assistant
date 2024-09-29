@@ -5,85 +5,85 @@
     border-width:2px;
 } */
 
-:root{
-    --myred:rgb(218, 11, 11);
+:root {
+    --myred: rgb(218, 11, 11);
 }
 
-#main{
-    display:flex;
-    flex-grow:1;
-    gap:10px;
+#main {
+    display: flex;
+    flex-grow: 1;
+    gap: 10px;
     overflow: hidden;
-    padding:0;
+    padding: 0;
 }
 
 * {
     box-sizing: border-box;
 }
 
-#menuBar{
-    color:white;
-    font-size:large;
+#menuBar {
+    color: white;
+    font-size: large;
     background-color: var(--myred);
     display: flex;
-    height:3cm;
+    height: 3cm;
     align-items: center;
-    font-family:Verdana, Geneva, Tahoma, sans-serif;
-    width:100%;
-    padding:0;
+    font-family: Verdana, Geneva, Tahoma, sans-serif; /* Common font */
+    width: 100%;
+    padding: 0;
 }
 
-body, html, #root{
-    height:100%;
-    width:100%;
-    display:flex;
+body, html, #root {
+    height: 100%;
+    width: 100%;
+    display: flex;
     flex-direction: column;
     overflow-x: hidden;
     overflow-y: hidden;
-    padding:0;
-    margin:0;
+    padding: 0;
+    margin: 0;
 }
 
-#root{
-    margin:0;
-    padding:0;
+#root {
+    margin: 0;
+    padding: 0;
 }
 
-#logo{
-    flex:2;
+#logo {
+    flex: 2;
     display: flex;
-    color:white;
-    font-size:xx-large;
+    color: white;
+    font-size: xx-large;
     align-items: center;
     width: 5cm;
-    padding:0;
+    padding: 0;
 }
 
-
-#language{
-    flex:1;
-    width:3cm;
+#language {
+    flex: 1;
+    width: 3cm;
     text-align: center;
 }
 
-#externalLink{
-    flex:1;
+#externalLink {
+    flex: 1;
 }
 
-#app{
+#app {
     display: flex;
     flex-direction: column;
     height: 100vh;
-    margin:0;
-    padding:0;
+    margin: 0;
+    padding: 0;
 }
 
-#chatWindow{
-    display:flex;
-    flex:1;
+#chatWindow {
+    display: flex;
+    flex: 1;
     flex-direction: column;
-    width:100%;
-    padding:0;
+    width: 100%;
+    padding: 0;
+    margin-left:20px;
 }
 
 #userInput {
@@ -91,22 +91,26 @@ body, html, #root{
     align-items: center;
     margin-top: 10px;
     margin-bottom: 20px;
-    flex:1;
+    flex: 1;
 }
 
 #userInput textarea {
     flex: 1;
     margin-right: 10px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif; /* Same font as conversation */
+    font-size: 16px; /* Same size as conversation */
 }
 
 #conversation {
     height: 400px;
     padding: 10px;
-    flex:9;
+    flex: 9;
     border: 1px solid #ccc;
     border-radius: 8px;
     overflow-y: scroll; /* Enable scrolling when messages overflow */
     background-color: #f9f9f9;
+    font-family: Verdana, Geneva, Tahoma, sans-serif; /* Common font */
+    font-size: 16px; /* Common font size */
 }
 
 .message {
@@ -114,39 +118,46 @@ body, html, #root{
     margin: 10px 0;
     border-radius: 5px;
     max-width: 70%;
+    font-family: inherit; /* Inherit font-family from parent */
+    font-size: inherit; /* Inherit font-size from parent */
 }
 
 .message.user {
     background-color: #e5e5e5;
-    color:black;
+    color: black;
     align-self: flex-end;
     margin-left: auto;
 }
 
 .message.bot {
-    background-color: #f9f9f9;
+    background-color: #ff9494;
     color: black;
 }
 
-.scrollableContent{
-    width:100%;
+.scrollableContent {
+    width: 100%;
 }
 
-#documentRenderer{
-    display:flex;
-    width:100%;
-    padding:10px;
-    margin:0;
+#documentRenderer {
+    display: flex;
+    width: 100%;
+    padding: 10px;
+    margin: 0;
 }
 
-#documentWindow{
-    display:flex;
-    width:100%;
-    flex:2;
-    padding:0;
+#documentWindow {
+    display: flex;
+    width: 100%;
+    flex: 2;
+    padding: 0;
+    margin-right:20px;
 }
 
-#sendButton,#xmlButton {
+#xmlButton{
+    margin-right:20px;
+}
+
+#sendButton, #xmlButton {
     padding: 10px 15px;
     font-size: 16px;
     color: white;
@@ -161,11 +172,11 @@ body, html, #root{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-  }
+}
 
-:global(body){
-    margin:0;
-    padding:0;
+:global(body) {
+    margin: 0;
+    padding: 0;
 }
 
 h1, h2, h3, h4, h5, h6, p, ul, ol {
@@ -177,7 +188,7 @@ h1, h2, h3, h4, h5, h6, p, ul, ol {
     padding: 0;
 }
 
-#sendButton:hover {
+#sendButton:hover,#xmlButton:hover {
     background-color: rgb(181, 8, 8);
 }
 
@@ -186,7 +197,8 @@ h1, h2, h3, h4, h5, h6, p, ul, ol {
     min-height: 50px;
     max-height: 300px; /* Max height before scroll */
     padding: 10px;
-    font-size: 16px;
+    font-size: 16px; /* Same size as conversation */
+    font-family: Verdana, Geneva, Tahoma, sans-serif; /* Same font as conversation */
     border: 1px solid #ccc;
     border-radius: 5px;
     resize: none; /* Disable manual resizing */
