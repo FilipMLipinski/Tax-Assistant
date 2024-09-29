@@ -24,7 +24,7 @@ function DocumentRenderer() {
         const loadAndTransformXml = async () => {
             try {
                 // Load the XML file
-                const xmlDefaultResponse = await fetch("/jacht.xml");
+                const xmlDefaultResponse = await fetch("/pusty.xml");
                 const xmlDefaultText = await xmlDefaultResponse.text();
 
                 const xmlResponse = await fetch("http://localhost:5000/api/get_xml");

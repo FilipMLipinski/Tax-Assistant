@@ -22,7 +22,7 @@ export default function TextField({ value, onChange, onSend }) { // Add onSend a
             ref={textareaRef}
             value={value}
             onChange={(e) => onChange(e.target.value)}  // Make sure to pass the new value
-            placeholder="Type your message..."
+            placeholder="Pisz..."
             onKeyDown={handleKeyPress} // Add keydown event listener
         />
     );
