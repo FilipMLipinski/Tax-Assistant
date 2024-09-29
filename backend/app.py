@@ -145,6 +145,8 @@ def doneMessage():
 
     thank_you_message = "Dziekuję, to wszystkie dane które potrzebowałem.\n\nWpisałem je do formularza, proszę sprawdzić czy są poprawne.\nJeśli tak, przejdźmy do dokładniejszego omówienia sprawy."
 
+    seed_database()
+
     return thank_you_message
 
 
