@@ -7,6 +7,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_socketio import SocketIO, emit
 import re
 import json
+from generateXML import generateXML 
 
 # Załaduj zmienne środowiskowe z pliku .env
 load_dotenv()
@@ -16,7 +17,7 @@ CORS(app)  # Umożliwienie zapytań między frontendem (React) a backendem (Flas
 
 # Konfiguracja WebSocket
 app.config['SECRET_KEY'] = 'your_secret_key'
-socketio = SocketIO(app)  # SocketIO dla komunikacji w czasie rzeczywistym
+socketio = SocketIO(app, cors_allowed_origins="*")  # SocketIO dla komunikacji w czasie rzeczywistym
 
 # Konfiguracja SQLite
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///form_data.db'
@@ -24,19 +25,19 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 INITIAL_FIELDS = [
+    'Data',
+    'KodUrzedu',
     'PESEL',
-    # 'ImiePierwsze',
-    # 'Nazwisko',
-    # 'Street',
-    # 'DataUrodzenia',
-    # 'KodKraju',
-    # 'Wojewodztwo',
-    # 'Powiat',
-    # 'Gmina',
-    # 'NrDomu',
-    # 'Miejscowosc',
-    # 'KodPocztowy',
-    # 'KodUrzedu'
+    'ImiePierwsze',
+    'Nazwisko',
+    'DataUrodzenia',
+    'KodKraju',
+    'Wojewodztwo',
+    'Powiat',
+    'Gmina',
+    'NrDomu',
+    'Miejscowosc',
+    'KodPocztowy',
 ]
 
 def printDB():
@@ -89,7 +90,7 @@ def getMissingFields():
 def update_using_assistant(user_input):
     missing_info = ', '.join(getMissingFields())
     conversation_history = [
-        {"role": "system", "content": """
+        {"role": "system", "content": f"""
         You are not a chat assistant, rather, you help me parse the information provided by the user. The message could be in english, polish, or ukrainian. 
          Help me understand what information the user provided. 
          I am interested to see if the user provided any of the missing information (note the list could contain only one item): {missing_info}.
@@ -97,7 +98,7 @@ def update_using_assistant(user_input):
          is the value provided by the user.
          For example imagine the message from the user was: moj Pesel to 292347428, imie Ania, nazwisko Dabrowska.
          And that the missing information is PESEL, Name, Street, City.
-         Then you should output {"PESEL":"292347428", "Name":"Ania"}.
+         Then you should output "PESEL":"292347428", "Name":"Ania".
          Note: you dont output her surname as it is not a missing information. And you dont output Street or City since that information was not provided.
          Now I will send you the message, output only a json formatted dictionary!
         """},
@@ -106,7 +107,7 @@ def update_using_assistant(user_input):
 
     # Wywołanie OpenAI API z kontekstem rozmowy
     chat_completion = client.chat.completions.create(
-        model="gpt-3.5-turbo",
+        model="gpt-4-turbo",
         messages=conversation_history,
         max_tokens=150
     )
@@ -136,7 +137,10 @@ def update_using_assistant(user_input):
     print(getMissingFields())
 
 def doneMessage():
+    generateXML(printDB())
     entries = FormData.query.all()
+
+    socketio.emit('xml_ready')
 
     thank_you_message = "Dziekuje, juz generuje XML.\n\n"
 
@@ -146,6 +150,17 @@ def doneMessage():
     final_message = thank_you_message + "Oto informacje ktore podales:\n" + data_string
 
     return final_message
+
+
+@app.route('/api/get_xml', methods=['GET'])
+def get_xml():
+    if(getMissingFields()==[]):
+        xml = generateXML(printDB())
+        print("returning " + xml)
+        return jsonify({'response':xml})
+    else:
+        print("returning none")
+        return jsonify({'response':"none"})
 
 
 # Funkcja do interpretowania odpowiedzi użytkownika i generowania dynamicznej odpowiedzi
@@ -179,7 +194,7 @@ def chat_assistant():
 
     # Wywołanie OpenAI API z kontekstem rozmowy
     chat_completion = client.chat.completions.create(
-        model="gpt-3.5-turbo",
+        model="gpt-4-turbo",
         messages=conversation_history,
         max_tokens=150
     )

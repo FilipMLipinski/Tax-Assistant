@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { io } from "socket.io-client";
 import "./DocumentWindow.css"; // Link to the CSS file
 
 export default function DocumentWindow() {
@@ -15,30 +16,53 @@ export default function DocumentWindow() {
 function DocumentRenderer() {
     const [htmlContent, setHtmlContent] = useState(null);
     const [error, setError] = useState(null);
+    
+    // Initialize socket connection
+    const socket = io("http://localhost:5000"); // Adjust if necessary
 
     useEffect(() => {
         const loadAndTransformXml = async () => {
             try {
                 // Load the XML file
-                const xmlResponse = await fetch("/jacht.xml");
-                const xmlText = await xmlResponse.text();
+                const xmlDefaultResponse = await fetch("/jacht.xml");
+                const xmlDefaultText = await xmlDefaultResponse.text();
+
+                const xmlResponse = await fetch("http://localhost:5000/api/get_xml");
+                const xmlResponseJson = await xmlResponse.json();
+                const xmlText = xmlResponseJson['response'];
 
                 // Load the XSL file
                 const xslResponse = await fetch("/xsd/styl.xsl");
                 const xslText = await xslResponse.text();
 
-                // Transform XML using XSL
-                const transformedHtml = transformXml(xmlText, xslText);
+                let transformedHtml = "";
+                if (xmlText === "none") {
+                    transformedHtml = transformXml(xmlDefaultText, xslText);
+                } else {
+                    transformedHtml = transformXml(xmlText, xslText);
+                }
                 setHtmlContent(transformedHtml);
-                console.log(transformedHtml);
             } catch (err) {
-                console.log(err);
+                console.error("Error loading XML:", err);
                 setError("Error loading XML or XSL file.");
             }
         };
 
+        // Load initial XML data
         loadAndTransformXml();
-    }, []);
+
+        // Listen for 'xml_ready' event
+        socket.on('xml_ready', () => {
+            console.log("Received xml_ready event, reloading XML...");
+            loadAndTransformXml(); // Reload XML when notified
+        });
+
+        // Cleanup the socket on component unmount
+        return () => {
+            socket.off('xml_ready'); // Remove the listener
+            socket.disconnect(); // Optionally disconnect when the component unmounts
+        };
+    }, [socket]);
 
     const transformXml = (xmlText, xslText) => {
         const parser = new DOMParser();

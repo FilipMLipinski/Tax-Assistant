@@ -1,0 +1,33 @@
+<?xml version="1.0" ?>
+<Deklaracja xmlns="http://crd.gov.pl/wzor/2023/12/13/13064/">
+  <Naglowek>
+    <KodFormularza kodSystemowy="PCC-3 (6)" kodPodatku="PCC" rodzajZobowiazania="Z" wersjaSchemy="1-0E">PCC-3</KodFormularza>
+    <WariantFormularza>6</WariantFormularza>
+    <CelZlozenia poz="P_6">1</CelZlozenia>
+    <Data poz="P_4">23-03-2020</Data>
+    <KodUrzedu>2020</KodUrzedu>
+  </Naglowek>
+  <Podmiot1 rola="Podatnik">
+    <OsobaFizyczna>
+      <PESEL>548234754</PESEL>
+      <ImiePierwsze>Filip</ImiePierwsze>
+      <Nazwisko>lipinski</Nazwisko>
+      <DataUrodzenia>05-12-2001</DataUrodzenia>
+    </OsobaFizyczna>
+    <AdresZamieszkaniaSiedziby rodzajAdresu="RAD">
+      <AdresPol>
+        <KodKraju>PL</KodKraju>
+        <Wojewodztwo>mazowieckie</Wojewodztwo>
+        <Powiat>warszawa</Powiat>
+        <Gmina>warszawa</Gmina>
+        <NrDomu>69</NrDomu>
+        <Miejscowosc>Warszawa</Miejscowosc>
+        <KodPocztowy>54-404</KodPocztowy>
+      </AdresPol>
+    </AdresZamieszkaniaSiedziby>
+  </Podmiot1>
+  <PozycjeSzczegolowe>
+    <P_7>1</P_7>
+  </PozycjeSzczegolowe>
+  <Pouczenia>1</Pouczenia>
+</Deklaracja>
