@@ -13,7 +13,7 @@ export default function ChatWindow() {
         ]);
 
         // Wyślij zapytanie do backendu Flask
-        fetch('http://localhost:5000/api/openai', {
+        fetch('http://localhost:5000/api/chat_assistant', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

@@ -27,10 +27,10 @@ function DocumentRenderer() {
                 const xslResponse = await fetch("/xsd/styl.xsl");
                 const xslText = await xslResponse.text();
 
-                console.log("everything is ok");
                 // Transform XML using XSL
                 const transformedHtml = transformXml(xmlText, xslText);
                 setHtmlContent(transformedHtml);
+                console.log(transformedHtml);
             } catch (err) {
                 console.log(err);
                 setError("Error loading XML or XSL file.");
