@@ -1,0 +1,26 @@
+services:
+  - type: web
+    name: frontend
+    env: docker
+    dockerfilePath: ./frontend/Dockerfile  # Path to frontend Dockerfile
+    buildCommand: npm install && npm run build
+    startCommand: nginx -g 'daemon off;'
+    plan: free  # Optional: define the plan (free, standard, etc.)
+    envVars:
+      - key: PORT
+        value: 80
+    ports:
+      - 3000  # Expose port 3000 to the public
+
+  - type: web
+    name: backend
+    env: docker
+    dockerfilePath: ./backend/Dockerfile  # Path to backend Dockerfile
+    plan: free  # Optional: define the plan (free, standard, etc.)
+    envVars:
+      - key: FLASK_ENV
+        value: development
+      - key: OPENAI_API_KEY
+        value: ${OPENAI_API_KEY}  # Pass from Render environment variables
+    ports:
+      - 5000  # Expose port 5000 to the public
