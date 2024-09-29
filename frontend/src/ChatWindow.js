@@ -37,13 +37,11 @@ export default function ChatWindow() {
         if (!hasGreeted.current) {
             const greetingMessage = "Witam! w czym mogę pomóc?"
             const userMessage = "Mam taką sprawę... <użytkownik podaje kontekst>";
-            const botMessage = "W takim razie potrzebuje Pan/Pani wypełnić formularz PCC-3. Już go pokazuję, po prawej stronie. Z chęcią go wypełnię, ale potrzebuję więcej informacji. Zacznijmy od Pana/Pani danych osobowych.";
+            const botMessage = "Rozumiem, że potrzebuje Pan/Pani wypełnić formularz PCC-3. Już go pokazuję, po prawej stronie. Z chęcią go wypełnię, ale potrzebuję więcej informacji. Proszę podać swój PESEL, imię i nazwisko.";
             
             // Set both messages in the state
             setMessages((prevMessages) => [
                 ...prevMessages,
-                {sender: "bot", text: greetingMessage},
-                { sender: "user", text: userMessage },
                 { sender: "bot", text: botMessage },
             ]);
             hasGreeted.current = true;  // Mark greeting as sent
