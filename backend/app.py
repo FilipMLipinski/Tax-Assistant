@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, jsonify, render_template, send_from_directory
 import os
 from dotenv import load_dotenv
 from openai import OpenAI
@@ -9,17 +9,18 @@ import re
 import json
 from generateXML import generateXML 
 
-# Załaduj zmienne środowiskowe z pliku .env
+# Load environment variables from .env file
 load_dotenv()
 
-app = Flask(__name__)
-CORS(app)  # Umożliwienie zapytań między frontendem (React) a backendem (Flask)
-
-# Konfiguracja WebSocket
+# Initialize the Flask app and required extensions
+app = Flask(__name__, static_folder='frontend/build')
+CORS(app)  # Enable CORS for the React frontend
 app.config['SECRET_KEY'] = os.getenv('OPENAI_API_KEY')
-socketio = SocketIO(app, cors_allowed_origins="*")  # SocketIO dla komunikacji w czasie rzeczywistym
 
-# Konfiguracja SQLite
+# Initialize SocketIO for real-time communication
+socketio = SocketIO(app, cors_allowed_origins="*")
+
+# Initialize SQLAlchemy for SQLite database
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///form_data.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
@@ -40,6 +41,16 @@ INITIAL_FIELDS = [
     'KodPocztowy',
 ]
 
+# Serve React frontend from the build directory
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def serve_react_app(path):
+    if path != "" and os.path.exists(os.path.join(app.static_folder, path)):
+        return send_from_directory(app.static_folder, path)
+    else:
+        return send_from_directory(app.static_folder, 'index.html')
+
+
 def printDB():
     # Query all the entries from the database
     entries = FormData.query.all()
@@ -53,18 +64,14 @@ def printDB():
     # Return the dictionary
     return db_dict
 
+# Function to initialize the database and seed it
 def seed_database():
-    # Clear the database first
-    db.session.query(FormData).delete()  # This will delete all existing entries
-    db.session.commit()  # Commit the changes to the database
-
-    # Check and add field names that don't already exist in the database
+    db.session.query(FormData).delete()
+    db.session.commit()
     for field_name in INITIAL_FIELDS:
-        existing_entry = FormData.query.filter_by(field_name=field_name).first()
-        if not existing_entry:
-            new_entry = FormData(field_name=field_name, value='')  # Initial value is empty
-            db.session.add(new_entry)
-    db.session.commit()  # Commit the changes to the database
+        if not FormData.query.filter_by(field_name=field_name).first():
+            db.session.add(FormData(field_name=field_name, value=''))
+    db.session.commit()
 
 class FormData(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -233,7 +240,7 @@ def get_value():
         return jsonify({"error": f"Nie znaleziono wartości dla {field_name}"}), 404
 
 
-# Zainicjuj bazę danych przed uruchomieniem aplikacji
+# Initialize the database before running the app
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
